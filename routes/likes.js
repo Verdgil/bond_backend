@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET users listing. */
+/* GET likes page. */
 router.get('/', function(req, res, next) {
-  res.send('');
+    res.send('');
 });
 
 module.exports = router;
