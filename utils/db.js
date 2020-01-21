@@ -87,6 +87,7 @@ const publication = mongoose.model('publication', publication_schema);
 
 const salt = "f447b370ecef01cbcabb11f4129422bd3ddd619191e779f67520d64c0b4de5e" +
     "27e3c5254b97acd1d64dbbd436d803ae756f80330dbd9819279f6dadb8d0c841a"; // Соль для хеширования паролей
+//TODO: Мб переделать?
 
 module.exports.user = user; // Даём доступ из вне
 module.exports.token = token;

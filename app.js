@@ -6,6 +6,7 @@ const users_router = require('./routes/users');
 const likes_router = require('./routes/likes');
 const get_galery_router = require('./routes/get_galery');
 const proxy_router = require('./routes/proxy');
+const get_publication_router = require("./routes/get_publication");
 
 
 let app = express();
@@ -20,5 +21,6 @@ app.use('/users', users_router);
 app.use('/likes', likes_router);
 app.use('/get_galery', get_galery_router);
 app.use('/send_rastr', proxy_router);
+app.use('/get_publication', get_publication_router);
 
 module.exports = app;
