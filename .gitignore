@@ -1,3 +1,7 @@
+# files in input/output
+input/*
+output/*
+
 #webstorm data
 .idea
 
