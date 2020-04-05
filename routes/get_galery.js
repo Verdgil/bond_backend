@@ -9,8 +9,8 @@ router.get('/:user_id', function (req, res, next) {
 });
 
 router.get('/:user_id', function (req, res, next) { // Проверка пользователя
-    db.user.find({login: req.params['user_id']}).exec(function (err, finding_user){
-        if(err){
+    db.user.find({login: req.params['user_id']}).exec(function (errors, finding_user){
+        if (errors){
             res.json(err.gen_err('500'));
         }
         if(finding_user.length >= 1) {
@@ -26,13 +26,13 @@ router.get('/:user_id', function (req, res, next) { // Проверка поль
 
 /* GET publicayion page. */
 router.get('/:user_id', function(req, res, next) {
-    db.user.find({login: req.params['user_id']}).exec(function (err, finding_user) {
-        if (err) {
+    db.user.find({login: req.params['user_id']}).exec(function (errors, finding_user) {
+        if (errors) {
             res.json(err.gen_err('500'));
         }
         db.publication.find({user: finding_user[0]}).select({ _id: 1, url: 1, likes: 1, dis_likes: 1})
-          .exec(function (err, finding_publication) {
-            if (err) {
+          .exec(function (errors, finding_publication) {
+            if (errors) {
                 res.json(err.gen_err('500'));
             }
             let ret = {

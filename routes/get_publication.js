@@ -10,12 +10,12 @@ router.get('/:publication_id', function (req, res, next) {
 });
 
 router.get('/:publication_id', function (req, res, next) {
-    db.publication.findById(req.params['publication_id']).exec(function (err, f_publication) {
-        if(err){
+    db.publication.findById(req.params['publication_id']).exec(function (errors,  f_publication) {
+        if (errors){
             res.json(err.gen_err('500'));
         }
-        db.comment.find({publication: f_publication}).exec(function (err, comments) {
-            if(err){
+        db.comment.find({publication: f_publication}).exec(function (errors,  comments) {
+            if (errors){
                 res.json(err.gen_err('500'));
             }
             let ret = {
@@ -43,7 +43,7 @@ router.get('/:publication_id', function (req, res, next) {
                         'text':''
                     };
                 //
-                /*db.user.findById(comments[i].user).exec(function (err, user) {
+                /*db.user.findById(comments[i].user).exec(function (errors,  user) {
                     ret['payload']['comments'][i]['login'] = user.login;
                 });*/
                 ret['payload']['comments'][i]['text'] = comments[i].text;

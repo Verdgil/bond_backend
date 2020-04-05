@@ -5,8 +5,8 @@ function check_tokken(req, res, next) { // Проверка верен ли то
     if(token === undefined) {
         res.json(err.gen_err('0'));
     }
-    db.token.find({token: token}).exec(function (err, finding_token) {
-        if (err) {
+    db.token.find({token: token}).exec(function (errors,  finding_token) {
+        if (errors) {
             res.json(err.gen_err('500'));
         }
         if (finding_token.length >= 1) {
