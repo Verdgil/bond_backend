@@ -3,7 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const db = require('../utils/db');
 const crypto = require('crypto');
-const err_str = require('../utils/str_err_lang_const');
+const err = require('../utils/str_err_lang_const');
 
 router.use(bodyParser.json()); // to support JSON-encoded bodies
 router.use(bodyParser.urlencoded({extended: true})); // to support URL-encoded bodies
@@ -15,9 +15,9 @@ router.use('/', function logs(req, res, next) {
 });
 // Выдача токенов
 router.post('/', function (req, res, next) {
-    login = req.body.login;
-    password = req.body.password;
-    lang = (req.body.lang !== undefined && req.body.lang in err_str) ? (req.body.lang) : ('ru_RU.UTF-8');
+    let login = req.body.login;
+    let password = req.body.password;
+    let lang = (req.body.lang !== undefined && req.body.lang in err_str) ? (req.body.lang) : ('ru_RU.UTF-8');
 
     if(login !== undefined && password !== undefined) {
         db.user.find({login: login}).exec(function (errors, user) {
@@ -45,21 +45,23 @@ router.post('/', function (req, res, next) {
                         if(err) {
                             res.json(err.gen_err('500'));
                         }
-                        res.json({"token": new_token.token});
+                        else {
+                            let ret = {
+                                'info': {},
+                                'status': 'success',
+                                'payload': {"token": new_token.token}
+                            };
+                            res.json(ret);
+                        }
                     });
                 });
             } else {
-                let ret = {
-                    'info': {},
-                    'status': 'success',
-                    'payload': {"token": new_token.token}
-                };
-                res.json(ret);
+                res.json(err.gen_err('2'))
             }
         });
     }
     else {
-        res.json(err_str[lang]['-1']);
+        res.json(res.json(err.gen_err('0')));
     }
 });
 
