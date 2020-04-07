@@ -22,8 +22,6 @@ router.get('/:user_id', function (req, res, next) { // Проверка поль
     });
 });
 
-
-
 /* GET publicayion page. */
 router.get('/:user_id', function(req, res, next) {
     db.user.find({login: req.params['user_id']}).exec(function (errors, finding_user) {

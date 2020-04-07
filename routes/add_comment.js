@@ -24,8 +24,6 @@ router.get('/', function (req, res, next) {
     });
 });
 
-
-
 /* GET publicayion page. */
 router.get('/', function(req, res, next) {
     db.user.find({login: res.locals["user_id"]}).exec(function (errors,  finding_user) {
