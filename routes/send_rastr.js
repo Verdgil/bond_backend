@@ -88,7 +88,8 @@ router.post('/', function (req, res, next) {
                             "waiting_time": 240
                         },
                         "payload": {
-                            "url": '/static/' + fn_splited[0].split('/')[1] + '.svg'
+                            "url": '/static/' + fn_splited[0].split('/')[1] + '.svg',
+                            "id": publication.id
                         },
                         "status":"success"
                     };
