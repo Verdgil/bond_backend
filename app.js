@@ -8,7 +8,7 @@ const get_galery_router = require('./routes/get_galery');
 const get_publication_router = require("./routes/get_publication");
 const add_comment_router = require('./routes/add_comment');
 const send_rastr_router = require('./routes/send_rastr');
-
+const register_router = require('./routes/register');
 
 let app = express();
 
@@ -24,5 +24,6 @@ app.use('/get_galery', get_galery_router);
 app.use('/get_publication', get_publication_router);
 app.use('/add_comment', add_comment_router);
 app.use('/send_rastr', send_rastr_router);
+app.use('/register',register_router);
 
 module.exports = app;
