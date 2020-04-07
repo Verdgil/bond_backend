@@ -10,6 +10,7 @@ function check_tokken(req, res, next) { // Проверка верен ли то
     else {
         if(token === undefined)
             token = token2;
+        res.locals.token = token;
         db.token.find({token: token}).exec(function (errors, finding_token) {
             if (errors) {
                 res.json(err.gen_err('500'));

@@ -26,18 +26,11 @@ router.post('/', upload.any(), function (req, res, next) {
     check_tokken.check_tokken(req, res, next);
 });
 
-function convert_to_svg(inp_file_name, out_file_name, res)
+function convert_to_svg(inp_file_name, out_file_name)
 {
     let param = '--despeckle-level 20 --despeckle-tightness 8.0';
     let trace = 'autotrace '  + param + ' ' + inp_file_name + ' --output-file ' + out_file_name;
-    exec(trace, (error, stdout, stderr) => {
-        if (error || stderr) {
-            res.json(err.gen_err('500', error.toString() + stderr.toString()));
-        }
-        else {
-            res.json('add');
-        }
-    });
+    exec(trace, (error, stdout, stderr) => {});
 }
 
 
@@ -71,7 +64,41 @@ router.post('/', function (req, res, next) {
     let fn = req.files[0].path;
     let fn_splited = fn.split('.');
     let out_fn = 'output/' + fn_splited[0].split('/')[1] + '.svg';
-    convert_to_svg(fn_splited[0] + res.locals.need_exit, out_fn, res);
+    db.token.find({token: res.locals.token}).exec(function (errors,  finding_token) {
+        if (errors) {
+            res.json(err.gen_err('500'));
+        }
+        let user_id = finding_token[0].user;
+        res.locals.user_id = db.user.findById(user_id).exec(function (errors,  finding_user) {
+            if (errors) res.json(err.gen_err('500'));
+            res.locals.user_id = finding_user.id;
+            res.locals.user_obj = finding_user;
+            let publication = new db.publication({
+                user: res.locals.user_obj,
+                likes: 0,
+                dis_likes: 0,
+                date: new Date(),
+                url: '/static/' + fn_splited[0].split('/')[1] + '.svg'
+            });
+            publication.save(function (errors) {
+                if(errors) res.json(err.gen_err('500'));
+                else {
+                    let ret = {
+                        "info": {
+                            "waiting_time": 240
+                        },
+                        "payload": {
+                            "url": '/static/' + fn_splited[0].split('/')[1] + '.svg'
+                        },
+                        "status":"success"
+                    };
+                    res.json(ret);
+                }
+            });
+
+        });
+    });
+    convert_to_svg(fn_splited[0] + res.locals.need_exit, out_fn);
 
 });
 

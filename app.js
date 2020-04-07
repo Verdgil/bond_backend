@@ -17,6 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 
+app.use('/static', express.static(__dirname + '/output'));
 app.use('/users', users_router);
 app.use('/likes', likes_router);
 app.use('/get_galery', get_galery_router);
