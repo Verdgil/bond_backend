@@ -10,6 +10,7 @@ const add_comment_router = require('./routes/add_comment');
 const send_rastr_router = require('./routes/send_rastr');
 const register_router = require('./routes/register');
 const login_router = require('./routes/login');
+const logout_router = require('./routes/logout');
 
 let app = express();
 
@@ -27,5 +28,6 @@ app.use('/add_comment', add_comment_router);
 app.use('/send_rastr', send_rastr_router);
 app.use('/register',register_router);
 app.use('/login', login_router);
+app.use('/logout', logout_router);
 
 module.exports = app;
